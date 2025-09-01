@@ -1,0 +1,72 @@
+nelson.rivas.ucv@gmail.com;
+navileth.leon@sunai.gob.ve;leon.navileth@gmail.com;
+jocurrea@gmail.com;
+
+
+…or create a new repository on the command line
+echo "# curso_php_nivel_3_20250901" >> README.md
+git init
+git add README.md
+git commit -m "first commit"
+git branch -M main
+git remote add origin https://github.com/UnewebInstituto/curso_php_nivel_3_20250901.git
+git push -u origin main
+
+
+git remote add origin https://github.com/UnewebInstituto/curso_php_nivel_3_20250901.git
+git branch -M main
+git push -u origin main
+
+
+Setting environment for using XAMPP for Windows.
+Profesor@DESKTOP-42TM87A c:\xampp
+# mysql -u root -p
+Enter password:
+Welcome to the MariaDB monitor.  Commands end with ; or \g.
+Your MariaDB connection id is 22
+Server version: 10.4.32-MariaDB mariadb.org binary distribution
+
+Copyright (c) 2000, 2018, Oracle, MariaDB Corporation Ab and others.
+
+Type 'help;' or '\h' for help. Type '\c' to clear the current input statement.
+
+MariaDB [(none)]> help functions
+You asked for help about help category: "Functions"
+For more information, type 'help <item>', where <item> is one of the following
+categories:
+   Bit Functions
+   Comparison Operators
+   Control Flow Functions
+   Date and Time Functions
+   Dynamic Column Functions
+   Encryption Functions
+   Information Functions
+   JSON Functions
+   Logical Operators
+   Miscellaneous Functions
+   Numeric Functions
+   Spider Functions
+   String Functions
+   Window Functions
+
+MariaDB [(none)]> help Encryption Functions
+You asked for help about help category: "Encryption Functions"
+For more information, type 'help <item>', where <item> is one of the following
+topics:
+   AES_DECRYPT
+   AES_ENCRYPT
+   COMPRESS
+   DECODE
+   DES_DECRYPT
+   DES_ENCRYPT
+   ENCODE
+   ENCRYPT
+   MD5
+   OLD_PASSWORD
+   PASSWORD
+   SHA1
+   SHA2
+   UNCOMPRESS
+   UNCOMPRESSED_LENGTH
+
+MariaDB [(none)]>
