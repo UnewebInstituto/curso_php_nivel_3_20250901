@@ -11,7 +11,7 @@
     }*/
 
     try {
-        $enlance = mysqli_connect($servidor, $usuario, $password, $bd);
+        $enlace = mysqli_connect($servidor, $usuario, $password, $bd);
 
     } catch(\Throwable $th){
         echo $th->getmessage();

@@ -1,0 +1,8 @@
+-- DEFINCIÓN DEL PATH DEL SISTEMA
+PATH=%PATH%;C:\xampp\php
+
+-- SE LEVANTA EL SERVIDOR
+php -S localhost:9001
+
+-- SE EJECUTA LA APLICACIÓN
+http://localhost:9001/henry/login.php

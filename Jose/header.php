@@ -1,3 +1,7 @@
+
+<?php
+    session_start();
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -6,6 +10,7 @@
     <title>Carrito de Compras</title>
     <link rel="stylesheet" href="../bootstrap/bootstrap.min.css">
     <link srs="stylesheet" href="../bootstrap/bootstrap.bundle.min.js">
+    <link rel="stylesheet" href="style.css">
     <link rel="shortcut icon"  href="../img/uneweb_icono.png">
     
 
