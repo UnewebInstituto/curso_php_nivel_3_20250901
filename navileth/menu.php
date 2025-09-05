@@ -25,7 +25,7 @@
             <label for="" class="form-label">Correo electrónico:</label>
             <input type="email" name="correo_electronico" id="correo_electronico" class="form-control" required>
             <div class="mt-3 text-center">
-            <button type="submit" class="btn btn-primary btn-sm">Enviar</button>
+            <button type="submit" class="btn btn-primary btn-sm">Registrar</button>
             <button type="reset" class="btn btn-secondary btn-sm">Borrar</button>
             <input type="hidden" name="id" value="2">
             </div>
@@ -65,7 +65,7 @@ if ($_SESSION['tipo_usuario'] == 'Administrador'){
         <textarea name="descripcion" id="descripcion" class="form-control" required></textarea>
     </div>
     <div class="mb-3 mt-3 text-center">
-        <button type="submit" class="btn btn-primary btn-sm">Enviar</button>
+        <button type="submit" class="btn btn-primary btn-sm">Registrar</button>
         <button type="reset" class="btn btn-secondary btn-sm">Borrar</button>
         <input type="hidden" name="id" value="3">
     </div>

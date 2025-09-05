@@ -1,0 +1,84 @@
+<?php
+include './header.php';
+include './conexion.php';
+$sql = "SELECT * from productos";
+try {
+    $resultado = mysqli_query($enlace, $sql);
+    $cantidad = mysqli_num_rows($resultado);
+    if ($cantidad >0) {
+        
+        $a=1;$b=1;
+
+        while ($data = mysqli_fetch_array($resultado)) {
+            $matriz_id[$a][$b] = $data['id'];
+            $matriz_nombre_producto[$a][$b] = $data['nombre_producto'];
+            $matriz_descripcion[$a][$b] = $data['descripcion'];
+            $matriz_precio[$a][$b] = $data['precio'];
+            $matriz_existencia[$a][$b] = $data['existencia'];
+            $matriz_nombre_archivo[$a][$b] = $data['nombre_archivo'];
+
+            $b++;
+            if ($b == 4) {
+                $a++;
+                $b=1;
+            }
+            
+                   
+        }
+        // echo var_dump($matriz_id);
+        // echo '<hr>';
+        // echo var_dump($matriz_nombre_producto);
+        // echo '<hr>';
+        // echo var_dump($matriz_descripcion);
+        // echo '<hr>';
+        // echo var_dump($matriz_precio);
+        // echo '<hr>';
+        // echo var_dump($matriz_existencia);
+        // echo '<hr>';
+        // echo var_dump($matriz_nombre_archivo);
+          if ($cantidad >=3) {
+            $condicion = 3;
+          }else {
+            $condicion = $cantidad;
+          }
+          echo '<table class="table table-bordered table-hover">';
+          for ($i=1; $i <= $a; $i++) { 
+            echo'<tr>';
+            for ($j=1; $j <= $condicion; $j++) { 
+                if (!empty($matriz_id[$i][$j])){
+                        echo "<td>";
+                        echo "<b>Nombre: </b>" . $matriz_nombre_producto[$i][$j] . "<br>";
+                        echo "<b>Precio: </b>" . $matriz_precio[$i][$j] . "<br>";
+                        echo "<b>Existencia: </b>" . $matriz_existencia[$i][$j] . "U.<br>";
+                        echo "<b>Descripción: </b>" . $matriz_descripcion[$i][$j] . "<br>";
+                        echo "<b>Imagen: </b><img src='" . $matriz_nombre_archivo[$i][$j] . "'><br>";
+                        echo "<a href='./validar.php'>Agregar al carrito</a>";
+                        echo "</td>";
+                    }
+            }
+            echo'</tr>';
+          }
+        echo '</table>';
+
+
+    }else {
+        $mensaje = "Catalogo no disponible.";
+        $severidad = 2;
+        setcookie('mensaje',$mensaje,time()+30);
+        setcookie('severidad',$severidad,time()+30);
+    }
+} catch (\Throwable $th) {
+        $mensaje = $th->getmessage();
+        $severidad = 4;
+        setcookie('mensaje',$mensaje,time()+30);
+        setcookie('severidad',$severidad,time()+30);
+}
+?>
+
+
+
+
+
+<?php
+include './footer.php';
+?>

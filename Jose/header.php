@@ -10,7 +10,7 @@
     <title>Carrito de Compras</title>
     <link rel="stylesheet" href="../bootstrap/bootstrap.min.css">
     <link srs="stylesheet" href="../bootstrap/bootstrap.bundle.min.js">
-    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="./css/style.css">
     <link rel="shortcut icon"  href="../img/uneweb_icono.png">
     
 
@@ -18,6 +18,5 @@
 <body>
         <div class="container">
             <h1>Carrito de compra</h1>
-        </div>    
-</body>
-</html>
+            
+
