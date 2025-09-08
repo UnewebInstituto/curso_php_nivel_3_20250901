@@ -18,7 +18,7 @@
                     <a href="./menu.php">Usuarios no registrados</a>
                 </div>
                 <div class="mt-3">
-                    <a href="">Ir al Inicio</a>
+                    <a href="/curso_php_nivel_3_20250901/henry/">Ir al Inicio</a>
                 </div>
                 </div>
             </div>

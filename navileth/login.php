@@ -18,6 +18,9 @@
                 <div class="mt-3">
                     <a href="./menu.php">Usuario no registrado</a>
                 </div>
+                <div class="mt-3">
+                    <a href="/curso_php_nivel_3_20250901/navileth/">Ir al inicio</a>
+                </div>
                 </div>
             </div>
         </div>

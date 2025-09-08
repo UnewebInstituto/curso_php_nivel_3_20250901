@@ -2,7 +2,6 @@
     session_start();
     error_reporting(0);
     include './conexion.php';
-
     switch ($_REQUEST['id']) {
         case '1':
             # Validación del usuario
@@ -79,7 +78,7 @@
             break;
         case '3':
             /*
-            SELECT AUTO_INCREMENT FROM INFORMATION_SCHEMA.TABLES WHERE TABLE_SCHEMA = 'bd_carrito_henry' AND  TABLE_NAME = 'productos';
+            SELECT AUTO_INCREMENT FROM INFORMATION_SCHEMA.TABLES WHERE TABLE_SCHEMA = 'bd_carrito_Jose' AND  TABLE_NAME = 'productos';
             # Registrar productos
             echo var_dump($_FILES['archivo']);
             echo "<hr>";
@@ -96,11 +95,12 @@
             */
             $archivo_imagen = $_FILES['archivo']['tmp_name'];
             $detalle_imagen = getimagesize($archivo_imagen);
+            // Sólo se permiten archivos *.jpg/*.jfif y *.png
             if ($detalle_imagen[2] == 2 || $detalle_imagen[2] == 3){
                 /*
                     Obtener el nombre de archivo con el cual se guardará la imagen
                 */
-                $sql_imagen = "SELECT AUTO_INCREMENT FROM INFORMATION_SCHEMA.TABLES WHERE TABLE_SCHEMA = 'bd_carrito_jose' AND TABLE_NAME = 'productos'";
+                $sql_imagen = "SELECT AUTO_INCREMENT FROM INFORMATION_SCHEMA.TABLES WHERE TABLE_SCHEMA = 'bd_carrito_Jose' AND TABLE_NAME = 'productos'";
                 $resultado_imagen = mysqli_query($enlace, $sql_imagen);
                 $nuevo_nombre_imagen = mysqli_fetch_array($resultado_imagen);
                 $ruta_imagen = "./productos/";
@@ -130,6 +130,91 @@
                 setcookie('severidad',$severidad,time()+30);
             }
             header('location:menu.php');
+            break;
+        case '4':
+            # Registrar en la tabla Agregar Carritos
+            $session_id = session_id();
+            $sql = "INSERT into agregar_carritos(session_id, producto_id) values ('$session_id', '$_REQUEST[producto_id]')";
+            try {
+                $resultado = mysqli_query($enlace, $sql);
+                $_SESSION['ver_carrito'] = true;
+                $mensaje = 'Producto fué añadido al carrito de compras con éxito';
+                $severidad = 1;
+                setcookie('mensaje',$mensaje,time()+30);
+                setcookie('severidad',$severidad,time()+30);
+            } catch (\Throwable $th) {
+                $mensaje = $th->getmessage();
+                $severidad = 4;
+                setcookie('mensaje',$mensaje,time()+30);
+                setcookie('severidad',$severidad,time()+30);
+            }
+            // Retornar al index
+            header('location:/curso_php_nivel_3_20250901/Jose/');
+            break;
+        case '5':
+            # Borrar del carrito de compras
+            $session_id = session_id();
+            $sql = "DELETE from agregar_carritos WHERE session_id = '$session_id' AND producto_id = '$_REQUEST[producto_id]'";
+            try {
+                $resultado = mysqli_query($enlace, $sql);
+            } catch (\Throwable $th) {
+                $mensaje = $th->getmessage();
+                $severidad = 4;
+                setcookie('mensaje',$mensaje,time()+30);
+                setcookie('severidad',$severidad,time()+30);
+            }
+            header('location:./ver_carrito.php');
+            break;
+        case '6':
+            # Procesar orden de compra
+            include './header.php';
+            echo "<h6 class='text-center'>Por favor antes de aceptar la compra</h6>";
+            echo "<h6 class='text-center'>revise el listado de artículos</h6>";
+            echo "<table class='table table-hover table-bordered'>";
+            echo "
+            <thead>
+                <tr>
+                    <th>Cantidad</th>
+                    <th>Nombre</th>
+                    <th>Precio</th>
+                    <th>Total</th>
+                </tr>
+            </thead>";
+            echo "<tbody>";
+            /*
+            foreach ($_REQUEST['producto_id'] as $key => $value) {
+                echo $key . ',' . $value . "<br>";
+            }
+            */
+            $producto = 0;
+            $sumatoria = 0;
+            for ($i=0; $i < count($_REQUEST['producto_id']) ; $i++) { 
+                echo "<tr>";
+                //echo "<td>" . $_REQUEST['producto_id'][$i] . "</td>";
+                echo "<td class='text-end'>" . $_REQUEST['cantidad'][$i] . "</td>";
+                echo "<td>" . $_REQUEST['nombre_producto'][$i] . "</td>";
+                echo "<td class='text-end'>" . $_REQUEST['precio'][$i] . "</td>";
+                $producto = $_REQUEST['cantidad'][$i] * $_REQUEST['precio'][$i];
+                echo "<td class='text-end'>" . number_format($producto,2,',','.') . "</td>";
+                $sumatoria += $producto;
+                echo "</tr>";
+            }
+            /*
+            echo var_dump($_REQUEST['cantidad']);
+            echo var_dump($_REQUEST['precio']);
+            echo var_dump($_REQUEST['nombre_producto']);
+            echo var_dump($_REQUEST['producto_id']);
+            */
+            echo "<tr>";
+                echo "<td class='text-end' colspan='3'><b>Total:</b></td>";
+                echo "<td class='text-end'>". number_format($sumatoria,2,',','.') . "</td>";
+            echo "</tr>";
+            echo "</tbody>";
+            echo "</table>";
+            echo "<button type='submit' class='btn btn-success'>Comprar</button>"."<br>";
+            echo "<a href=''>Volver al Inicio</a>"."<br>";
+            echo "<a href=''>Volver al Carrito</a>"."<br>";
+            include './footer.php';
             break;
         default:
             # code...

@@ -32,6 +32,7 @@
         </div>
     </div>
 </form>
+
 <?php
 if ($_SESSION['tipo_usuario'] == 'ADMINISTRADOR'){
 ?>

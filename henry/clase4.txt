@@ -1,0 +1,101 @@
+El error en tu consulta SQL se debe a que estás usando el alias de columna `idxxx` en la cláusula `WHERE`. La cláusula `WHERE` se evalúa antes de que se asignen los alias de las columnas en la cláusula `SELECT`.
+
+-----
+
+## Causa del error
+
+En MySQL/MariaDB, el **orden de ejecución de una consulta** es el siguiente:
+
+1.  `FROM`: Se seleccionan y combinan las tablas.
+2.  `WHERE`: Se filtran las filas según las condiciones.
+3.  `GROUP BY`: Se agrupan las filas.
+4.  `HAVING`: Se filtran los grupos.
+5.  `SELECT`: Se seleccionan las columnas y se aplican los alias.
+6.  `ORDER BY`: Se ordenan los resultados.
+
+Como puedes ver, la cláusula `WHERE` se ejecuta **antes** que la cláusula `SELECT`. Esto significa que cuando el motor de base de datos llega a `B.producto_id = A.idxxx`, el alias `idxxx` aún no existe.
+
+-----
+
+## Corrección del query
+
+Para corregir la consulta, simplemente debes usar el **nombre original de la columna**, que es `A.id`, en la cláusula `WHERE`.
+
+### Query Corregido
+
+```sql
+SELECT A.id as idxxx,
+       A.nombre_producto,
+       A.descripcion,
+       A.nombre_archivo as foto,
+       A.precio,
+       A.existencia as cantidad
+       from productos as A, agregar_carritos as B
+       where B.producto_id = A.id and 
+             B.session_id = 'dlntqe7l6s4vrckbpur2mbbm40';
+```
+
+-----
+
+## Recomendación Adicional
+
+Es una buena práctica usar la sintaxis **`JOIN` explícita** en lugar de la sintaxis implícita con una coma en la cláusula `FROM`. La sintaxis `JOIN` es más clara, más legible y reduce la probabilidad de cometer errores al omitir una condición de unión.
+
+### Query con JOIN Explícito
+
+```sql
+SELECT A.id as idxxx,
+       A.nombre_producto,
+       A.descripcion,
+       A.nombre_archivo as foto,
+       A.precio,
+       A.existencia as cantidad
+       from productos as A
+       INNER JOIN agregar_carritos as B ON B.producto_id = A.id
+       where B.session_id = 'dlntqe7l6s4vrckbpur2mbbm40';
+```
+
+Esta versión es mucho más clara y es la forma estándar de escribir consultas SQL modernas.
+
+
+Como experto en Bootstrap, te confirmo que la clase para justificar a la derecha un elemento es **`text-end`**.
+
+Esta clase se aplica directamente al elemento de texto o a su contenedor para alinear el contenido a la derecha.
+
+-----
+
+### Ejemplo de uso
+
+Aquí te muestro cómo puedes usarla:
+
+```html
+<p class="text-end">
+  Este texto está alineado a la derecha.
+</p>
+```
+
+-----
+
+### Alineación en diferentes tamaños de pantalla
+
+Si necesitas que la alineación cambie en distintos tamaños de pantalla, puedes usar las clases responsivas de Bootstrap. La estructura es `text-[breakpoint]-[end]`, donde `[breakpoint]` puede ser:
+
+  * `sm` (small)
+  * `md` (medium)
+  * `lg` (large)
+  * `xl` (extra-large)
+  * `xxl` (extra-extra-large)
+
+**Ejemplo:**
+
+```html
+<p class="text-sm-end">
+  Este texto se alinea a la derecha solo en pantallas pequeñas o más grandes.
+</p>
+
+<p class="text-md-end">
+  Este texto se alinea a la derecha solo en pantallas medianas o más grandes.
+</p>
+```
+
+Con `text-end` solo, la alineación a la derecha es universal, sin importar el tamaño de la pantalla.

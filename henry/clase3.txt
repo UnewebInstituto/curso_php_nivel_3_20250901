@@ -59,3 +59,79 @@ if ($resultado) {
     echo "Error: " . $mysqli->error;
 }
 ?>
+
+Hay varias formas de obtener el próximo ID `AUTO_INCREMENT` en MySQL usando PHP. La forma más segura y común es después de una inserción exitosa, pero también es posible consultarlo antes.
+
+-----
+
+### 1\. Usando `mysqli_insert_id()` (Método Recomendado)
+
+Este es el método más fiable. Después de ejecutar una consulta `INSERT` que crea una nueva fila, puedes obtener el ID de la fila insertada. Es la forma más segura porque garantiza que obtienes el ID de la fila que acabas de crear, incluso en entornos con múltiples usuarios insertando datos simultáneamente.
+
+```php
+<?php
+// Suponiendo que ya tienes una conexión $mysqli
+$sql = "INSERT INTO usuarios (nombre, email) VALUES ('Juan', 'juan@example.com')";
+
+if ($mysqli->query($sql) === TRUE) {
+    $ultimo_id = $mysqli->insert_id;
+    echo "Nuevo registro creado con el ID: " . $ultimo_id;
+} else {
+    echo "Error: " . $sql . "<br>" . $mysqli->error;
+}
+?>
+```
+
+-----
+
+### 2\. Usando `LAST_INSERT_ID()` en MySQL
+
+Esta función SQL hace lo mismo que `mysqli_insert_id()` y es útil si necesitas usar el último ID insertado en una consulta posterior dentro de la misma sesión.
+
+```php
+<?php
+// Suponiendo que ya tienes una conexión $mysqli
+$sql = "INSERT INTO usuarios (nombre, email) VALUES ('Maria', 'maria@example.com')";
+
+if ($mysqli->query($sql) === TRUE) {
+    $result = $mysqli->query("SELECT LAST_INSERT_ID()");
+    $fila = $result->fetch_row();
+    $ultimo_id = $fila[0];
+    echo "Nuevo registro creado con el ID: " . $ultimo_id;
+} else {
+    echo "Error: " . $sql . "<br>" . $mysqli->error;
+}
+?>
+```
+
+Este método es menos directo que el anterior en PHP, pero es fundamental para operaciones más complejas a nivel de base de datos.
+
+-----
+
+### 3\. Consultando la tabla `INFORMATION_SCHEMA`
+
+Si necesitas obtener el próximo ID **sin insertar un registro**, puedes consultar la tabla `INFORMATION_SCHEMA`. Este método no es ideal para obtener el ID que se usará para una inserción inminente, ya que otro proceso podría insertar una fila antes de que tú lo hagas, invalidando el ID que obtuviste. Sin embargo, puede ser útil para fines informativos o de depuración.
+
+```php
+<?php
+// Suponiendo que ya tienes una conexión $mysqli
+$db_name = "nombre_de_tu_base_de_datos";
+$table_name = "usuarios";
+
+$sql = "SELECT `AUTO_INCREMENT` FROM `INFORMATION_SCHEMA`.`TABLES` WHERE `TABLE_SCHEMA` = '" . $db_name . "' AND `TABLE_NAME` = '" . $table_name . "'";
+
+$resultado = $mysqli->query($sql);
+
+if ($resultado) {
+    $fila = $resultado->fetch_assoc();
+    $proximo_id = $fila['AUTO_INCREMENT'];
+    echo "El próximo ID auto_increment será: " . $proximo_id;
+} else {
+    echo "Error: " . $mysqli->error;
+}
+?>
+```
+
+**Importante:** Este método es propenso a "race conditions" (condiciones de carrera), donde otro proceso puede insertar un registro entre la consulta del ID y tu inserción. Por lo tanto, no se recomienda para obtener el ID de una nueva fila que vas a crear.
+
+**En resumen, para obtener el ID de una fila recién insertada, usa siempre `mysqli_insert_id()` o `LAST_INSERT_ID()`. Si solo necesitas el próximo ID para propósitos informativos, `INFORMATION_SCHEMA` es una opción viable.**

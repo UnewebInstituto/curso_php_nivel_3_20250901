@@ -54,7 +54,8 @@
                         echo "<b>Existencia: </b>" . $matriz_existencia[$i][$j] . " Unidad(es)<br>";
                         echo "<b>Descripción: </b>" . $matriz_descripcion[$i][$j] . "<br>";
                         echo "<b>Imagen: </b><img src='" . $matriz_nombre_archivo[$i][$j] . "'><br>";
-                        echo "<a href='./validar.php'>Agregar al carrito</a>";
+                        // id = 4: Operación agregar al carrito de compras
+                        echo "<a href='./validar.php?id=4&producto_id=" . $matriz_id[$i][$j] . "'>Agregar al carrito</a>";
                         echo "</td>";
                         
                     }
@@ -76,6 +77,27 @@
         setcookie('severidad',$severidad,time()+30);
     }
 ?>
+<!-- /////////////////////////////////////////////// -->
+<?php
+    // Opción disponible sólo para el usuario administrador
+    if ($_SESSION['tipo_usuario'] == 'ADMINISTRADOR') {
+?>
+        <a href="./menu.php">Menú</a><br>
+<?php
+    }
+?>
+<!-- /////////////////////////////////////////////// -->
+<?php
+    // Opción disponible si y sólo se añadió productos
+    // al carrito de compras
+    if($_SESSION['ver_carrito']) {
+?>
+        <a href="./ver_carrito.php">Ver carrito de compras</a><br>
+<?php
+    }
+?>
+<!-- /////////////////////////////////////////////// -->
+<a href="./login.php">Ingresar al Sistema</a><br>
 <?php
     include './footer.php';
 ?>
