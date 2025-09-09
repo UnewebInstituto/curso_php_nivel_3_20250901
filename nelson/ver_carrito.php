@@ -16,7 +16,7 @@
         $resultado = mysqli_query($enlace, $sql);
         $cantidad = mysqli_num_rows($resultado);
         if ($cantidad > 0){
-            echo "<a href='/curso_php_nivel_3_20250901/henry/'>Volver</a>";
+            echo "<a href='/curso_php_nivel_3_20250901/nelson/'>Volver</a>";
             echo "<form action='./validar.php' method='post'>";
             echo "<table class='table table-hover table-bordered'>";
             echo "
@@ -53,7 +53,7 @@
             $severidad = 2;
             setcookie('mensaje',$mensaje,time()+30);
             setcookie('severidad',$severidad,time()+30);
-            header('location:/curso_php_nivel_3_20250901/henry/');
+            header('location:/curso_php_nivel_3_20250901/nelson/');
         }
     } catch (\Throwable $th) {
         $mensaje = $th->getmessage();
