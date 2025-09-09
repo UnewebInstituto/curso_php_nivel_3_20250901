@@ -149,7 +149,7 @@
                 setcookie('severidad',$severidad,time()+30);
             }
             // Retornar al index
-            header('location:/curso_php_nivel_3_20250901/henry/');
+            header('location:/curso_php_nivel_3_20250901/nelson/');
             break;
         case '5':
             # Borrar del carrito de compras
