@@ -1,6 +1,9 @@
 -- CREACIÓN DE LA BASE DE DATOS
 create database bd_carrito_nelson;
 
+-- CONEXIÓN A LA BASE DE DATOS
+use bd_carrito_nelson;
+
 -- DEFINICIÓN DE TABLAS
 create table agregar_carritos(
     session_id varchar(26),
@@ -40,3 +43,13 @@ create table compras(
     foreign key(usuario_id) references usuarios(id),
     foreign key(producto_id) references productos(id)
 );
+
+-- CREACIÓN DEL USUARIO ADMINISTRADOR
+INSERT INTO usuarios(
+    cedula,
+    nombre_apellido,
+    correo_electronico,
+    clave, 
+    tipo_usuario
+)values
+('V12345678', 'Nelson Rivas', 'nelson@sunai.gob.ve', md5('V12345678'), 'administrador');
