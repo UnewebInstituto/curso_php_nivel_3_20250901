@@ -33,7 +33,7 @@
     </div>
 </form>
 <?php
-if ($_SESSION['tipo_usuario'] == 'ADMINISTRADOR'){
+if ($_SESSION['tipo_usuario'] == 'administrador'){
 ?>
     <hr>
     <h2 class="text-center">Agregar Productos</h2>

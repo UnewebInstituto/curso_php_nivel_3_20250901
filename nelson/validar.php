@@ -17,7 +17,7 @@
                         $_SESSION['nombre_apellido'] = $datos['nombre_apellido'];
                         ;
                         $_SESSION['tipo_usuario'] = $datos['tipo_usuario'];
-                        if ($datos['tipo_usuario']=='ADMINISTRADOR'){
+                        if ($datos['tipo_usuario']=='administrador'){
                             #El mensaje durará 30 segundos
                             $mensaje = 'Bienvenido Administrador del Sistema';
                             $severidad = 1;
