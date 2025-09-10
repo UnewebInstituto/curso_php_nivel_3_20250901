@@ -94,7 +94,7 @@
 <!-- /////////////////////////////////////////////// -->
 <?php
     // Opción disponible sólo para el usuario administrador
-    if (isset($_SESSION['tipo_usuario']) && $_SESSION['tipo_usuario'] == 'ADMINISTRADOR') {
+    if (isset($_SESSION['tipo_usuario']) && $_SESSION['tipo_usuario'] == 'administrador') {
 ?>
         <a href="./menu.php">Menú</a><br>
 <?php
