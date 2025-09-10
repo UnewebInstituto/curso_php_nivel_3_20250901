@@ -1,6 +1,6 @@
 <?php
     session_start();
-    //error_reporting(0);
+    error_reporting(0);
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -17,4 +17,15 @@
     <div class="container">
         <header>
             <h1>Carrito de compras</h1>
+            <?php
+            if ($_SESSION['activo']){
+            ?>
+                <div class="text-end">
+                    <b>Usuario:</b><?php echo $_SESSION['nombre_apellido'];?>
+                    <br>
+                    <a href="./cerrar_sesion.php">Cerrar sesión</a>
+                </div>
+            <?php
+            }
+            ?>
         </header>

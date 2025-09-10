@@ -79,7 +79,7 @@ try {
 <!-- /////////////////////////////////////////////// -->
 <?php
     // Opción disponible sólo para el usuario administrador
-    if ($_SESSION['tipo_usuario'] == 'ADMINISTRADOR') {
+    if ($_SESSION['tipo_usuario'] == 'Administrador') {
 ?>
         <a href="./menu.php">Menú</a><br>
 <?php
@@ -96,7 +96,15 @@ try {
     }
 ?>
 <!-- /////////////////////////////////////////////// -->
+<?php
+if (!$_SESSION['activo']) {
+?>
 <a href="./login.php">Ingresar al Sistema</a><br>
+<?php
+} 
+?>
+
+
 <?php
     include './footer.php';
 ?>

@@ -97,7 +97,13 @@
     }
 ?>
 <!-- /////////////////////////////////////////////// -->
-<a href="./login.php">Ingresar al Sistema</a><br>
+<?php
+    if(!$_SESSION['activo']) {
+?>
+    <a href="./login.php">Ingresar al Sistema</a><br>
+<?php
+    }
+?>
 <?php
     include './footer.php';
 ?>

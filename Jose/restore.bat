@@ -1,0 +1,1 @@
+"C:\xampp\mysql\bin\mysql" -u root -p  nombre_bd_recuperacion  < bd_carrito_jose_20250910.sql

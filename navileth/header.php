@@ -18,5 +18,16 @@ error_reporting(0);
     <div class="container">
         <header>
             <h3 class="text-center">Carrito de compras</h3>
+        <?php
+            if ($_SESSION['activo']) {
+        ?>
+        <div class="text-end">
+            <b>Usuario: </b> <?php echo $_SESSION['nombre_apellido'];?>
+            <br>
+            <a href="./cerrar_sesion.php">Cerrar sesión.</a>
+        <?php
+        }
+        ?>
+        </div>
         </header>
         

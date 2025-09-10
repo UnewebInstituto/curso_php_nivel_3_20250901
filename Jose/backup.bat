@@ -1,0 +1,1 @@
+"C:\xampp\mysql\bin\mysqldump" -u root -p  bd_carrito_jose  > bd_carrito_jose_20250910.sql

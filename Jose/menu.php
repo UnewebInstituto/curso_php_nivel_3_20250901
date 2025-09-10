@@ -1,8 +1,9 @@
 <?php
     include './header.php';
+    include './conexion.php';
 ?>
 <div class="text-center">
-    <a href="./login.php">Ir al Inicio</a>
+    <a href="/curso_php_nivel_3_20250901/Jose/">Ir al Inicio</a>
 </div>
 <h2 class="text-center">Agregar Usuarios</h2>
 <form action="./validar.php" method="post">
@@ -72,6 +73,32 @@ if ($_SESSION['tipo_usuario'] == 'ADMINISTRADOR'){
     </div>
 </form>
 <?php
+
+echo "<hr>";
+echo "<h2 class='text-center'>Reporte de Ventas</h2>";
+$sql = "SELECT * FROM reporte_de_ventas";
+$resultado = mysqli_query($enlace, $sql);
+echo "<table class='table table-bordered table-hover'>";
+echo "<thead>
+     <tr>
+        <th>Nombre</th>
+        <th>Cantidad</th>
+        <th>Total</th>
+        <th>Fecha y Hora</th>
+     </tr>
+     </thead>";
+echo "<tbody>";
+    while ($data = mysqli_fetch_array($resultado)){
+        echo "<tr>";
+            echo "<td>" . $data['nombre_apellido'] . "</td>";
+            echo "<td>" . $data['cantidad'] . "</td>";
+            echo "<td>" . number_format($data['total'],2,',','.') . "</td>";
+            echo "<td>" . $data['fecha_hora'] . "</td>";
+        echo "</tr>";
+    };
+echo "</tbody>";
+echo "</table>";
+echo "<hr>" . "<br>";
 }
 ?>
 <?php

@@ -1,0 +1,1 @@
+"C:\xampp\mysql\bin\mysql" -u root -p bd_carrito_henry_restore < bd_carrito_henry_20250910.sql

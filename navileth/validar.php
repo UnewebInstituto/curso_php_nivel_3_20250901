@@ -16,9 +16,9 @@
                         $_SESSION['usuario_id'] = $datos['id'];
                         $_SESSION['cedula'] = $datos['cedula'];
                         $_SESSION['nombre_apellido'] = $datos['nombre_apellido'];
-                        ;
+                        $_SESSION['activo'] = true;
                         $_SESSION['tipo_usuario'] = $datos['tipo_usuario'];
-                        if ($datos['tipo_usuario']=='ADMINISTRADOR'){
+                        if ($datos['tipo_usuario']=='Administrador'){
                             #El mensaje durará 30 segundos
                             $mensaje = 'Bienvenido Administrador del Sistema';
                             $severidad = 1;
@@ -30,7 +30,7 @@
                             $severidad = 1;
                             setcookie('mensaje',$mensaje,time()+30);
                             setcookie('severidad',$severidad,time()+30);
-                            header('location:login.php');
+                            header('location:/curso_php_nivel_3_20250901/navileth/');
                         }
                     }else{
                         $mensaje = "Clave no valida";
@@ -182,31 +182,58 @@
                     <th>Total</th>
                 </tr>
             </thead>';
-            echo'<tbody';
+            echo'<tbody>';
             $producto =0;
             $sumatoria=0;
-            for ($i=0; $i < count($_REQUEST['producto_id']) ; $i++) { 
+            echo'<form action="" method="post">';
+                for ($i=0; $i < count($_REQUEST['producto_id']) ; $i++) { 
+                    echo "<tr>";
+                    //echo "<td>" . $_REQUEST['producto_id'][$i] . "</td>";
+                    echo "<td class='text-end'>" . $_REQUEST['cantidad'][$i] . "</td>";
+                    echo "<input type='hidden' name='cantidad[]' value='" . $_REQUEST['cantidad'][$i] . "'>";
+                    echo "<input type='hidden' name='producto_id[]' value='" . $_REQUEST['producto_id'][$i] . "'>";
+                    echo "<td>" . $_REQUEST['nombre_producto'][$i] . "</td>";
+                    echo "<td class='text-end'>" . $_REQUEST['precio'][$i] . "</td>";
+                    $producto = $_REQUEST['cantidad'][$i] * $_REQUEST['precio'][$i];
+                    echo "<td class='text-end'>" . number_format($producto,2,',','.') . "</td>";
+                    $sumatoria += $producto;
+                    echo "</tr>";
+                }
                 echo "<tr>";
-                //echo "<td>" . $_REQUEST['producto_id'][$i] . "</td>";
-                echo "<td class='text-end'>" . $_REQUEST['cantidad'][$i] . "</td>";
-                echo "<td>" . $_REQUEST['nombre_producto'][$i] . "</td>";
-                echo "<td class='text-end'>" . $_REQUEST['precio'][$i] . "</td>";
-                $producto = $_REQUEST['cantidad'][$i] * $_REQUEST['precio'][$i];
-                echo "<td class='text-end'>" . number_format($producto,2,',','.') . "</td>";
-                $sumatoria += $producto;
+                    echo "<td class='text-end' colspan='3'><b>Total:</b></td>";
+                    echo "<td class='text-end'>". number_format($sumatoria,2,',','.') . "</td>";
                 echo "</tr>";
-            }
-            echo "<tr>";
-                echo "<td class='text-end' colspan='3'><b>Total:</b></td>";
-                echo "<td class='text-end'>". number_format($sumatoria,2,',','.') . "</td>";
-            echo "</tr>";
-            echo "</tbody>";
-            echo "</table>";
-            echo "<button type='submit' class='btn btn-success'>Comprar</button>";
+                echo "</tbody>";
+                echo "</table>";
+                echo'<div class="text-center">';
+                echo "<button type='submit' class='btn btn-success'>Comprar</button>";
+                echo "<input type='hidden' name='id' value='7'>";
+            echo'</form>';
             echo'<br>';
-            echo "<a href=''>Volver al Inicio</a><br>";
-            echo "<a href=''>Volver al Carrito</a>";
+            echo "<a href='/curso_php_nivel_3_20250901/navileth/';'>Volver al Catalogo</a><br>";
+            echo "<a href='./ver_carrito.php'>Volver al Carrito</a>";
+            echo'</div>';
             include'./footer.php';
+            break;
+
+        case'7':
+            # Registrar compra y borrar de agregar carrito
+            date_default_timezone_set("America/Caracas");
+            $fecha_hora = date('Y-m-d h:i:s');
+            # Registro de compras
+            for ($i=0; $i < count($_REQUEST['cantidad']) ; $i++) { 
+                $sql = "INSERT INTO compras(usuario_id, producto_id, cantidad, fecha_hora) VALUES ('" . $_SESSION['usuario_id'] . "', '". $_REQUEST['producto_id'][$i] . "', '" . $_REQUEST['cantidad'][$i] . "', '" . $fecha_hora . "')";
+                $resultado = mysqli_query($enlace, $sql);
+            }
+            # Borrar de agregar carritos
+            $sql = "DELETE FROM agregar_carritos WHERE session_id ='" . session_id() . "'";
+            $resultado = mysqli_query($enlace, $sql);
+            
+            $mensaje = 'Su compra fué procesada con éxito.';
+            $severidad = 1;
+            setcookie('mensaje',$mensaje,time()+30);
+            setcookie('severidad',$severidad,time()+30);
+            header('location:/curso_php_nivel_3_20250901/navileth/');
             break;
 
         default:

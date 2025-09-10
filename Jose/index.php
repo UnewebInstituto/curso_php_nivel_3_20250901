@@ -1,7 +1,6 @@
 <?php
     include './header.php';
     include './conexion.php';
-
     $sql = "SELECT * from productos";
     try {
         $resultado = mysqli_query($enlace, $sql);
@@ -29,8 +28,10 @@
             echo "<hr>";
             echo var_dump($matriz_descripcion);
             echo "<hr>";
+            
             echo var_dump($matriz_nombre_archivo);
             echo "<hr>";
+            
             echo var_dump($matriz_precio);
             echo "<hr>";
             echo var_dump($matriz_existencia);
@@ -48,16 +49,15 @@
                 for ($j=1; $j <= $condicion ; $j++) { 
                     if (!empty($matriz_id[$i][$j])){
                         echo "<td>";
-                    echo "<b>Nombre:</b>" . $matriz_nombre_producto[$i][$j] . "<br>";
-                    echo "<b>Precio:</b>" . $matriz_precio[$i][$j] . "<br>";
-                    echo "<b>Existencia:</b>" . $matriz_existencia[$i][$j] . " Unidad(es)<br>";
-                    echo "<b>Descripción:</b>" . $matriz_descripcion[$i][$j] . "<br>";
-                    echo "<b>Imagen:</b><img src='". $matriz_nombre_archivo[$i][$j] . "'><br>";
-                    
-                    // id= 4: operacion agregar al carrito de compras
-                    echo "<a href='./validar.php?id=4&producto_id=" . $matriz_id[$i][$j] . "'>Agregar al carrito</a>";
-                    echo "</td>";
-                    
+                        echo "<b>Nombre: </b>" . $matriz_nombre_producto[$i][$j] . "<br>";
+                        echo "<b>Precio: </b>" . $matriz_precio[$i][$j] . "<br>";
+                        echo "<b>Existencia: </b>" . $matriz_existencia[$i][$j] . " Unidad(es)<br>";
+                        echo "<b>Descripción: </b>" . $matriz_descripcion[$i][$j] . "<br>";
+                        echo "<b>Imagen: </b><img src='" . $matriz_nombre_archivo[$i][$j] . "'><br>";
+                        // id = 4: Operación agregar al carrito de compras
+                        echo "<a href='./validar.php?id=4&producto_id=" . $matriz_id[$i][$j] . "'>Agregar al carrito</a>";
+                        echo "</td>";
+                        
                     }
                 }
                 echo "<tr>";
@@ -77,7 +77,6 @@
         setcookie('severidad',$severidad,time()+30);
     }
 ?>
-
 <!-- /////////////////////////////////////////////// -->
 <?php
     // Opción disponible sólo para el usuario administrador
@@ -98,7 +97,13 @@
     }
 ?>
 <!-- /////////////////////////////////////////////// -->
-<a href="./login.php">Ingresar al Sistema</a><br>
+<?php
+    if(!$_SESSION['activo']) {
+?>
+    <a href="./login.php">Ingresar al Sistema</a><br>
+<?php
+    }
+?>
 <?php
     include './footer.php';
 ?>

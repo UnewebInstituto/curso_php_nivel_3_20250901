@@ -1,6 +1,7 @@
 <?php
     include './header.php';
     include './conexion.php';
+    if ($_SESSION['activo']) {
     $session_id = session_id();
     $sql = "SELECT A.id,
        A.nombre_producto,
@@ -60,5 +61,12 @@
         $severidad = 4;
         setcookie('mensaje',$mensaje,time()+30);
         setcookie('severidad',$severidad,time()+30);
+    }
+    }else {
+        $mensaje = 'Debe iniciar sesión para ver el carrito de compras.';
+            $severidad = 2;
+            setcookie('mensaje',$mensaje,time()+30);
+            setcookie('severidad',$severidad,time()+30);
+            header('location:/curso_php_nivel_3_20250901/navileth/');
     }
 ?>
